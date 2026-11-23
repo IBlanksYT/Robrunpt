@@ -1,0 +1,34 @@
+{
+  "_aviso": "Este ficheiro é PÚBLICO (é copiado para o site). Nunca coloques aqui palavras-passe, segredos ou o Google Client Secret.",
+  "siteUrl": "https://dancing-bubblegum-470ffb.netlify.app",
+  "googleClientId": "",
+  "community": {
+    "name": "ROB RUN Portugal",
+    "shortName": "ROB RUN PT",
+    "tagline": "A comunidade portuguesa independente de jogadores de ROB RUN.",
+    "description": "Comunidade independente e não oficial de jogadores portugueses de ROB RUN: clips, clãs, guias e novidades da comunidade.",
+    "contactEmail": "",
+    "disclaimer": "Comunidade independente e não oficial. Não representa nem está associada aos criadores do jogo ROB RUN."
+  },
+  "links": {
+    "discord": "",
+    "tiktok": "",
+    "youtube": "",
+    "instagram": "",
+    "x": "",
+    "twitch": ""
+  },
+  "visual": {
+    "primary": "#1fbf5b",
+    "secondary": "#e1263b",
+    "background": "#07090a",
+    "headingFont": "Rajdhani",
+    "bodyFont": "Inter"
+  },
+  "privacy": {
+    "sessionDays": 30,
+    "inactiveAccountMonths": 24,
+    "autoBackupsToKeep": 14,
+    "versionsToKeep": 100
+  }
+}
