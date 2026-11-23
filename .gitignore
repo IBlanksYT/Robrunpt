@@ -1,8 +1,0 @@
-node_modules/
-public/
-.local-blobs/
-.netlify/
-.env
-.env.*
-.scratch/
-netlify/lib/generated-config.mjs
