@@ -55,7 +55,7 @@ function decorate(page) {
   }
 }
 
-const LABELS = { hero: 'Destaque', text: 'Texto', split: 'Imagem + texto', features: 'Cartões', cta: 'Chamada para ação', image: 'Imagem', gallery: 'Galeria', video: 'Vídeo', rules: 'Regras', discord: 'Discord', faq: 'FAQ', notice: 'Aviso', feed: 'Lista dinâmica', clipSubmit: 'Formulário de clips', auth: 'Login', profile: 'Perfil', spacer: 'Espaço' };
+const LABELS = { hero: 'Destaque', text: 'Texto', split: 'Imagem + texto', features: 'Cartões', cta: 'Chamada para ação', image: 'Imagem', gallery: 'Galeria', video: 'Vídeo', rules: 'Regras', discord: 'Discord', faq: 'FAQ', notice: 'Aviso', feed: 'Lista dinâmica', clipSubmit: 'Formulário de clips', clanSubmit: 'Formulário de clãs', auth: 'Login', profile: 'Perfil', spacer: 'Espaço' };
 function labelOf(s) { return LABELS[s.type] || s.type; }
 
 function markSelected() {

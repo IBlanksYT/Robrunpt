@@ -21,6 +21,7 @@ if (!process.env.ADMIN_PASSWORD) {
 await startLocalBlobs(join(root, '.local-blobs'));
 const { default: api } = await import('../netlify/functions/api.mjs');
 
+const CSP_HEADER = (await readFile(join(root, 'netlify.toml'), 'utf8')).match(/Content-Security-Policy = "([^"]+)"/)?.[1];
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.ico': 'image/x-icon' };
 
 async function tryFile(p) {
@@ -50,7 +51,7 @@ createServer(async (req, res) => {
     if (!file) file = await tryFile(join(pub, `${clean}.html`));
     if (!file && (clean === '/' || clean === '')) file = join(pub, 'index.html');
     if (!file) file = join(pub, 'page.html'); // equivalente ao redirect /* -> /page.html 200
-    res.writeHead(200, { 'content-type': TYPES[extname(file)] || 'application/octet-stream', 'cache-control': 'no-store' });
+    res.writeHead(200, { 'content-type': TYPES[extname(file)] || 'application/octet-stream', 'cache-control': 'no-store', ...(CSP_HEADER ? { 'content-security-policy': CSP_HEADER, 'x-frame-options': 'SAMEORIGIN' } : {}) });
     res.end(await readFile(file));
   } catch (e) {
     console.error(e);

@@ -307,6 +307,8 @@ p { margin: 0 0 1em; }
 .rr-form label { font-weight: 600; font-size: .92rem; margin-top: 8px; display: flex; justify-content: space-between; }
 .rr-form input, .rr-form textarea { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--c-border); background: var(--c-bg); color: var(--c-text); font: inherit; transition: border-color .2s, box-shadow .2s; }
 .rr-form input:focus, .rr-form textarea:focus { outline: none; border-color: var(--c-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-primary) 25%, transparent); }
+.rr-form .rr-check { display: flex; align-items: center; gap: 10px; justify-content: flex-start; cursor: pointer; }
+.rr-check input { width: 18px; height: 18px; accent-color: var(--c-primary); }
 .rr-field-hint { margin: 0; font-size: .85rem; color: var(--c-muted); }
 .rr-field-hint.is-ok { color: var(--c-primary); }
 .rr-field-hint.is-bad { color: #ff6b6b; }

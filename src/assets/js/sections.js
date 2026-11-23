@@ -155,6 +155,11 @@ export const SECTION_TYPES = {
     fields: [{ key: 'heading', label: 'Título', type: 'text' }, { key: 'text', label: 'Texto', type: 'textarea' }],
     defaults: { heading: 'Publicar um clip', text: 'Cola o link do YouTube ou TikTok.' },
   },
+  clanSubmit: {
+    label: 'Formulário de clãs', icon: '🛡️', group: 'Dinâmicos',
+    fields: [{ key: 'heading', label: 'Título', type: 'text' }, { key: 'text', label: 'Texto', type: 'textarea' }],
+    defaults: { heading: 'Envia o teu clã', text: 'Preenche o formulário. A equipa analisa o pedido antes de o clã aparecer na lista.' },
+  },
   auth: {
     label: 'Login Google', icon: '🔐', group: 'Dinâmicos',
     fields: [{ key: 'heading', label: 'Título', type: 'text' }, { key: 'text', label: 'Texto', type: 'textarea' }],

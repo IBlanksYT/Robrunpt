@@ -12,7 +12,20 @@ export function iconBtn(icon, title, onClick, cls = '') {
 }
 
 /** Janela modal. actions: [{label, value, cls}] — devolve a value escolhida (ou null ao fechar). */
-export function modal({ title, body, actions = [{ label: 'Fechar', value: null }], wide = false, onOpen }) {
+// Mostra no ecrã qualquer erro inesperado do painel (em vez de falhar em silêncio).
+if (!window.__rrErrorsHooked) {
+  window.__rrErrorsHooked = true;
+  const show = (msg) => { try { toast(`Erro no painel: ${String(msg).slice(0, 200)}`, 'error', 9000); } catch { alert(msg); } };
+  window.addEventListener('error', (e) => { if (e.message && !/ResizeObserver/.test(e.message)) show(e.message); });
+  window.addEventListener('unhandledrejection', (e) => show(e.reason?.message || e.reason));
+}
+
+export function modal(opts) {
+  try { return modalInner(opts); }
+  catch (e) { alert(`Não foi possível abrir a janela: ${e.message}`); return Promise.resolve(null); }
+}
+
+function modalInner({ title, body, actions = [{ label: 'Fechar', value: null }], wide = false, onOpen }) {
   return new Promise((resolve) => {
     const prev = document.activeElement;
     const close = (v) => { overlay.remove(); document.removeEventListener('keydown', onKey); prev?.focus?.(); resolve(v); };

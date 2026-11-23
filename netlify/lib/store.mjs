@@ -5,17 +5,17 @@ import { randomBytes } from 'node:crypto';
 import { HttpError, sleep } from './http.mjs';
 
 export const STORES = {
-  site: 'rr-site',
-  versions: 'rr-versions',
-  content: 'rr-content',
-  clips: 'rr-clips',
-  users: 'rr-users',
-  sessions: 'rr-sessions',
-  media: 'rr-media',
-  stats: 'rr-stats',
-  ratelimit: 'rr-ratelimit',
-  backups: 'rr-backups',
-  audit: 'rr-audit',
+  site: 'rr-site',          // draft, published
+  versions: 'rr-versions',  // v/<id>
+  content: 'rr-content',    // news/<id>, guides/<id>, clans/<id>
+  clips: 'rr-clips',        // c/<id>, idx/<plataforma>-<videoId>, byuser/<userId>/<id>
+  users: 'rr-users',        // u/<id>
+  sessions: 'rr-sessions',  // s/<sid>
+  media: 'rr-media',        // m/<key> (binário)
+  stats: 'rr-stats',        // d/<AAAA-MM-DD>
+  ratelimit: 'rr-ratelimit',// <bucket>/<chave>
+  backups: 'rr-backups',    // b/<id>
+  audit: 'rr-audit',        // a/<id>
 };
 
 const cache = new Map();
@@ -30,6 +30,11 @@ function rawStore(storeName, strong) {
   return strong ? getStore({ name: storeName, consistency: 'strong' }) : getStore(storeName);
 }
 
+/**
+ * Devolve a store pedida. Se o ambiente não suportar leituras de consistência forte,
+ * passa automaticamente para o modo normal. Erros do armazenamento são convertidos
+ * numa mensagem clara (sem URLs nem segredos) para facilitar o diagnóstico.
+ */
 export function store(name) {
   const storeName = STORES[name];
   if (!storeName) throw new Error(`Store desconhecida: ${name}`);
@@ -66,6 +71,7 @@ export async function getJSONMeta(name, key) {
   if (!r) return null;
   let etag = r.etag;
   if (!etag) {
+    // Alguns ambientes (ex.: servidor Blobs local) não devolvem ETag no GET; a listagem devolve.
     const { blobs } = await store(name).list({ prefix: key });
     etag = blobs.find((b) => b.key === key)?.etag;
   }
@@ -98,6 +104,10 @@ export async function getMany(name, keys, concurrency = 12) {
   return out;
 }
 
+/**
+ * Leitura-modificação-escrita com controlo de concorrência otimista (ETag).
+ * fn recebe o valor atual (ou null) e devolve o novo valor; devolver undefined cancela.
+ */
 export async function updateJSON(name, key, fn, { retries = 6 } = {}) {
   for (let attempt = 0; attempt < retries; attempt++) {
     const cur = await getJSONMeta(name, key);
@@ -116,6 +126,7 @@ export function newId() {
   return Date.now().toString(36) + randomBytes(5).toString('hex');
 }
 
+// Ids ordenáveis do mais recente para o mais antigo (ordem lexicográfica).
 export function newestFirstId() {
   const inv = (9_999_999_999_999 - Date.now()).toString().padStart(13, '0');
   return `${inv}-${randomBytes(4).toString('hex')}`;

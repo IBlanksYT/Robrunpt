@@ -253,7 +253,7 @@ R.spacer = (s) => {
 };
 
 // Secções dinâmicas: delegadas em widgets.js (injetado em ctx.widgets)
-for (const t of ['feed', 'clipSubmit', 'auth', 'profile']) {
+for (const t of ['feed', 'clipSubmit', 'clanSubmit', 'auth', 'profile']) {
   R[t] = (s, site, ctx) => {
     const mount = h('div', { class: `rr-dyn rr-dyn--${t}` });
     const head = t === 'feed' ? sectionHead(ctx, s.props, site) : null;

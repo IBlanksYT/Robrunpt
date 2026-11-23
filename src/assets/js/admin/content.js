@@ -2,7 +2,7 @@
 import { h, fmtDate, toast } from '../dom.js';
 import { api } from '../api.js';
 import { renderFields } from './fields.js';
-import { modal, btn, confirmDialog, spinner, emptyState, errorMsg } from './ui.js';
+import { modal, btn, confirmDialog, promptDialog, spinner, emptyState, errorMsg } from './ui.js';
 import { safeUrl } from '../sanitize-client.js';
 
 const TYPES = {
@@ -80,20 +80,38 @@ export async function contentView(root, type) {
   const cfg = TYPES[type];
   const listEl = h('div', { class: 'ad-table-wrap' }, spinner());
   const search = h('input', { type: 'search', placeholder: 'Pesquisar…', class: 'ad-search' });
-  const filter = h('select', {}, h('option', { value: '' }, 'Todos'), h('option', { value: 'pub' }, 'Publicados'), h('option', { value: 'draft' }, 'Rascunhos'));
+  const filter = h('select', {}, h('option', { value: '' }, 'Todos'), h('option', { value: 'pub' }, 'Publicados'), h('option', { value: 'draft' }, 'Rascunhos'),
+    type === 'clans' ? h('option', { value: 'pending' }, 'Pedidos pendentes') : null);
+  const pendingNote = h('div');
   let items = [];
   const draw = () => {
     const q = search.value.trim().toLowerCase();
-    const shown = items.filter((i) => (!q || `${i.title} ${i.summary} ${i.tag || ''}`.toLowerCase().includes(q)) && (!filter.value || (filter.value === 'pub' ? i.published : !i.published)));
+    const match = (i) => !filter.value || (filter.value === 'pub' ? i.published : filter.value === 'pending' ? i.status === 'pending' : !i.published);
+    const shown = items.filter((i) => (!q || `${i.title} ${i.summary} ${i.tag || ''} ${i.submittedByName || ''}`.toLowerCase().includes(q)) && match(i))
+      .sort((a, b) => (b.status === 'pending') - (a.status === 'pending'));
+    const nPending = items.filter((i) => i.status === 'pending').length;
+    pendingNote.replaceChildren(...(type === 'clans' && nPending ? [h('div', { class: 'ad-note ad-note--alert' }, `🛡️ ${nPending} pedido(s) de clã à espera de análise.`)] : []));
     if (!items.length) { listEl.replaceChildren(emptyState(`Ainda não há ${cfg.title.toLowerCase()}.`, btn(`+ Criar`, () => editItem(type, null, load), 'ad-btn--primary'))); return; }
     listEl.replaceChildren(h('table', { class: 'ad-table' },
       h('thead', {}, h('tr', {}, h('th', {}, ''), h('th', {}, type === 'clans' ? 'Clã' : 'Título'), h('th', {}, 'Estado'), h('th', {}, type === 'clans' ? 'Recrutamento' : 'Data'), h('th', {}, 'Ações'))),
       h('tbody', {}, shown.map((i) => h('tr', {},
         h('td', { class: 'ad-td-thumb' }, safeUrl(i.cover) ? h('img', { src: safeUrl(i.cover), alt: '' }) : h('span', { class: 'ad-thumb-empty' }, type === 'clans' ? '🛡' : '📰')),
         h('td', {}, h('strong', {}, i.title, i.tag ? ` [${i.tag}]` : ''), i.pinned ? h('span', { class: 'ad-pill ad-pill--green' }, 'fixado') : null, h('div', { class: 'ad-muted ad-small' }, (i.summary || '').slice(0, 90))),
-        h('td', {}, h('span', { class: `ad-pill ad-pill--${i.published ? 'green' : 'grey'}` }, i.published ? 'Publicado' : 'Rascunho')),
+        h('td', {}, i.status === 'pending' ? h('span', { class: 'ad-pill ad-pill--gold' }, 'Pendente')
+          : i.status === 'rejected' ? h('span', { class: 'ad-pill ad-pill--red' }, 'Recusado')
+          : h('span', { class: `ad-pill ad-pill--${i.published ? 'green' : 'grey'}` }, i.published ? 'Publicado' : 'Rascunho'),
+          i.submittedByName ? h('div', { class: 'ad-small ad-muted' }, `Enviado por ${i.submittedByName}`) : null,
+          i.status === 'rejected' && i.rejectReason ? h('div', { class: 'ad-small ad-muted' }, `Motivo: ${i.rejectReason}`) : null),
         h('td', { class: 'ad-small' }, type === 'clans' ? (i.recruiting ? '● A recrutar' : 'Fechado') : fmtDate(i.publishedAt || i.createdAt)),
-        h('td', {}, h('div', { class: 'ad-row' },
+        h('td', {}, h('div', { class: 'ad-row ad-row--wrap' },
+          type === 'clans' && i.status && i.status !== 'approved' ? btn('✓ Aprovar', async () => {
+            try { await api(`/admin/clans/${i.id}/approve`, { method: 'POST' }); toast('Clã aprovado e publicado.'); load(); } catch (e) { toast(errorMsg(e), 'error'); }
+          }, 'ad-btn--sm ad-btn--primary') : null,
+          type === 'clans' && i.status === 'pending' ? btn('✕ Recusar', async () => {
+            const reason = await promptDialog(`Recusar "${i.title}"`, { label: 'Motivo (o jogador vai ver esta mensagem)', placeholder: 'Ex.: falta o link do Discord' });
+            if (reason === null) return;
+            try { await api(`/admin/clans/${i.id}/reject`, { method: 'POST', body: { reason } }); toast('Pedido recusado.'); load(); } catch (e) { toast(errorMsg(e), 'error'); }
+          }, 'ad-btn--sm ad-btn--danger-ghost') : null,
           btn('Editar', () => editItem(type, i, load), 'ad-btn--sm'),
           btn(i.published ? 'Despublicar' : 'Publicar', async () => {
             try { await api(`/admin/content/${type}/${i.id}`, { method: 'PUT', body: { published: !i.published } }); load(); } catch (e) { toast(errorMsg(e), 'error'); }
@@ -113,6 +131,6 @@ export async function contentView(root, type) {
   root.replaceChildren(h('div', { class: 'ad-page' },
     h('div', { class: 'ad-page__head' }, h('div', {}, h('h1', {}, cfg.title), h('p', { class: 'ad-muted' }, `Aparecem nas secções "Lista dinâmica" do site (ex.: página ${cfg.page}).`)),
       h('div', { class: 'ad-row' }, btn('Ver no site ↗', () => window.open(cfg.page, '_blank', 'noopener'), 'ad-btn--ghost'), btn(`+ Nova ${cfg.singular}`, () => editItem(type, null, load), 'ad-btn--primary'))),
-    h('div', { class: 'ad-row ad-filters' }, search, filter), listEl));
+    h('div', { class: 'ad-row ad-filters' }, search, filter), pendingNote, listEl));
   load();
 }

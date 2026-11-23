@@ -9,7 +9,7 @@ import { rateLimit } from '../lib/ratelimit.mjs';
 import { verifyGoogleCredential } from '../lib/google.mjs';
 import { upsertGoogleUser, getUser, publicUser, selfUser, listUsers, updateUser, deleteUserRecord } from '../lib/users.mjs';
 import { getPublished, getDraft, saveDraft, publish, listVersions, getVersion, restoreVersion, createVersion } from '../lib/site.mjs';
-import { listContent, getContent, createContent, updateContent, duplicateContent, deleteContent } from '../lib/content.mjs';
+import { listContent, getContent, createContent, updateContent, duplicateContent, deleteContent, submitClan, getMyClanSubmission, setClanStatus, removeUserClanSubmission } from '../lib/content.mjs';
 import { createClip, listClips, getClip, updateClip, deleteClip, deleteClipsOfUser, publicClip, normalizeClipUrl } from '../lib/clips.mjs';
 import { uploadMedia, listMedia, serveMedia, deleteMedia } from '../lib/media.mjs';
 import { recordView, recordEvent, getStats } from '../lib/stats.mjs';
@@ -111,7 +111,8 @@ route('GET', '/me/export', async (ctx) => {
   const user = await requireUser(ctx);
   if (user.virtual) throw new HttpError(400, 'A conta de administrador não tem dados pessoais.');
   const clips = await listClips({ userId: user.id, includeHidden: true, limit: 60 });
-  return new Response(JSON.stringify({ exportedAt: new Date().toISOString(), user, clips: clips.items }, null, 2), {
+  const clan = await getMyClanSubmission(user.id);
+  return new Response(JSON.stringify({ exportedAt: new Date().toISOString(), user, clips: clips.items, clanSubmission: clan }, null, 2), {
     headers: { 'content-type': 'application/json; charset=utf-8', 'content-disposition': 'attachment; filename="os-meus-dados-robrun-pt.json"', 'cache-control': 'no-store' },
   });
 });
@@ -120,6 +121,7 @@ route('DELETE', '/me', async (ctx) => {
   const user = await requireUser(ctx);
   if (user.virtual) throw new HttpError(400, 'A conta de administrador não pode ser eliminada aqui.');
   const n = await deleteClipsOfUser(user.id);
+  await removeUserClanSubmission(user.id);
   await deleteUserSessions(user.id);
   await deleteUserRecord(user.id);
   await endSession(ctx);
@@ -153,6 +155,21 @@ route('DELETE', '/clips/:id', async (ctx) => {
   await deleteClip(clip);
   if (!isOwner) await audit(user, 'clip removido', clip.id, { title: clip.title, autor: clip.userId });
   return { ok: true };
+});
+
+// ---------- Pedidos de clã (jogadores) ----------
+route('GET', '/clans/mine', async (ctx) => {
+  const user = await requireUser(ctx);
+  return { submission: user.virtual ? null : await getMyClanSubmission(user.id) };
+});
+
+route('POST', '/clans/submit', async (ctx) => {
+  const user = await requireUser(ctx);
+  if (user.virtual) throw new HttpError(400, 'Inicia sessão com Google para enviar o teu clã.');
+  await rateLimit('clan-submit', user.id, { limit: 5, windowSec: 3600, message: 'Demasiadas tentativas. Tenta mais tarde.' });
+  const item = await submitClan(user, await readJSON(ctx.req, 10000));
+  await audit(user, 'pedido de clã enviado', item.id, { title: item.title });
+  return { submission: { id: item.id, title: item.title, status: item.status } };
 });
 
 // ---------- Administração: site / CMS ----------
@@ -231,6 +248,20 @@ route('DELETE', '/admin/content/:type/:id', async (ctx) => {
   return { ok: true };
 });
 
+route('POST', '/admin/clans/:id/approve', async (ctx) => {
+  const user = await requireUser(ctx, 'moderator');
+  const item = await setClanStatus(ctx.params.id, 'approved', user);
+  await audit(user, 'pedido de clã aprovado', item.id, { title: item.title });
+  return { item };
+});
+route('POST', '/admin/clans/:id/reject', async (ctx) => {
+  const user = await requireUser(ctx, 'moderator');
+  const body = await readJSON(ctx.req, 2000);
+  const item = await setClanStatus(ctx.params.id, 'rejected', user, body.reason || '');
+  await audit(user, 'pedido de clã recusado', item.id, { title: item.title, reason: item.rejectReason });
+  return { item };
+});
+
 // ---------- Administração: clips ----------
 route('GET', '/admin/clips', async (ctx) => {
   await requireUser(ctx, 'moderator');
@@ -278,6 +309,7 @@ route('DELETE', '/admin/users/:id', async (ctx) => {
   if (!target) throw new HttpError(404, 'Utilizador não encontrado.');
   if (target.id === actor.id) throw new HttpError(400, 'Não podes eliminar a tua própria conta aqui.');
   const n = await deleteClipsOfUser(target.id);
+  await removeUserClanSubmission(target.id);
   await deleteUserSessions(target.id);
   await deleteUserRecord(target.id);
   await audit(actor, 'utilizador eliminado', target.id, { clips: n, name: target.name });
@@ -397,4 +429,3 @@ export default async (req, context) => {
 };
 
 export const config = { path: '/api/*' };
-export { siteConfig };

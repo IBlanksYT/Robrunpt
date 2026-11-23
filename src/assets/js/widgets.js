@@ -162,8 +162,9 @@ async function contentFeed(mount, s, site, ctx) {
       const wrap = h('div', { class: layout === 'grid' ? `rr-grid rr-cols-${type === 'clans' ? 2 : 3}` : 'rr-list' });
       for (const it of shown) wrap.append(contentCard(type, it, layout, open));
       const moreU = href(p.moreHref, site);
-      mount.replaceChildren(shown.length ? wrap : h('p', { class: 'rr-empty' }, LABELS[type].empty),
-        p.moreLabel && moreU && shown.length ? h('div', { class: 'rr-actions rr-actions--center' }, h('a', { class: 'rr-btn rr-btn--ghost', href: moreU }, p.moreLabel)) : null);
+      const parts = [shown.length ? wrap : h('p', { class: 'rr-empty' }, LABELS[type].empty)];
+      if (p.moreLabel && moreU && shown.length) parts.push(h('div', { class: 'rr-actions rr-actions--center' }, h('a', { class: 'rr-btn rr-btn--ghost', href: moreU }, p.moreLabel)));
+      mount.replaceChildren(...parts);
       observeReveal(mount);
     } catch (e) { mount.replaceChildren(errorBox(e.message, list)); }
   }
@@ -275,6 +276,74 @@ export const widgets = {
     }).catch(() => { btnBox.replaceChildren(errorBox('Não foi possível carregar o login Google. Desativa bloqueadores para este site e tenta novamente.')); });
   },
 
+  async clanSubmit(mount, s, site, ctx) {
+    const p = s.props;
+    const head = h('div', { class: 'rr-sec-head' }, p.heading ? h('h2', { class: 'rr-h2' }, p.heading) : null, p.text ? h('p', { class: 'rr-lead' }, p.text) : null);
+    const card = h('div', { class: 'rr-card rr-form-card' }, head);
+    mount.replaceChildren(card);
+    if (ctx.mode === 'preview') { card.append(h('div', { class: 'rr-placeholder' }, 'Formulário para os jogadores enviarem o seu clã (ativo no site publicado)')); return; }
+    if (!ctx.user) {
+      card.classList.add('rr-align-center');
+      card.append(h('a', { class: 'rr-btn rr-btn--primary', href: `/login?next=${encodeURIComponent(location.pathname)}` }, 'Entrar com Google para enviar o teu clã'));
+      return;
+    }
+    if (ctx.user.virtual) { card.append(h('p', { class: 'rr-muted' }, 'Inicia sessão com uma conta Google para enviar um clã.')); return; }
+    const status = (sub) => {
+      const map = {
+        pending: ['rr-notice--info', 'Pedido em análise', 'Recebemos o teu pedido. A equipa vai analisá-lo e, se for aprovado, o clã aparece na lista.'],
+        approved: ['rr-notice--success', 'Clã aprovado 🎉', 'O teu clã já aparece na lista de clãs.'],
+        rejected: ['rr-notice--warning', 'Pedido recusado', sub.rejectReason ? `Motivo: ${sub.rejectReason}` : 'A equipa recusou o pedido. Fala connosco no Discord se tiveres dúvidas.'],
+      };
+      const [cls, title, text] = map[sub.status] || map.pending;
+      return h('div', { class: `rr-notice ${cls}` }, h('strong', { class: 'rr-notice__title' }, `${title} — ${sub.title}${sub.tag ? ` [${sub.tag}]` : ''}`), h('p', {}, text), h('p', { class: 'rr-small rr-muted' }, 'Só é permitido um pedido por conta.'));
+    };
+    const loadingEl = loading();
+    card.append(loadingEl);
+    try {
+      const { submission } = await api('/clans/mine');
+      loadingEl.remove();
+      if (submission) { card.append(status(submission)); return; }
+    } catch (e) { loadingEl.replaceWith(errorBox(e.message)); return; }
+
+    const f = (id, label, el, hint) => [h('label', { for: id }, label), el, hint ? h('p', { class: 'rr-field-hint' }, hint) : null];
+    const uidp = s.id;
+    const name = h('input', { id: `cn-${uidp}`, type: 'text', required: true, maxlength: 60, placeholder: 'Ex.: Lusitanos' });
+    const tag = h('input', { id: `ct-${uidp}`, type: 'text', maxlength: 12, placeholder: 'Ex.: LUS' });
+    const logo = h('input', { id: `cl-${uidp}`, type: 'url', maxlength: 500, placeholder: 'https://… (link direto para uma imagem, opcional)' });
+    const summary = h('textarea', { id: `cs-${uidp}`, rows: 2, maxlength: 400, required: true, placeholder: 'Uma ou duas frases sobre o clã' });
+    const about = h('textarea', { id: `ca-${uidp}`, rows: 4, maxlength: 2000, placeholder: 'Opcional: história, horários, objetivos…' });
+    const reqs = h('textarea', { id: `cr-${uidp}`, rows: 2, maxlength: 600, placeholder: 'Ex.: nível mínimo, idade, horários' });
+    const members = h('input', { id: `cm-${uidp}`, type: 'text', maxlength: 20, placeholder: 'Ex.: 25' });
+    const contact = h('input', { id: `cc-${uidp}`, type: 'url', required: true, maxlength: 500, placeholder: 'https://discord.gg/…' });
+    const recruiting = h('input', { type: 'checkbox', checked: true });
+    const trap = h('input', { type: 'text', name: 'website', tabindex: '-1', autocomplete: 'off', class: 'rr-hp', 'aria-hidden': 'true' });
+    const submit = h('button', { class: 'rr-btn rr-btn--primary', type: 'submit' }, 'Enviar pedido');
+    const form = h('form', { class: 'rr-form', novalidate: true },
+      f(name.id, 'Nome do clã *', name), f(tag.id, 'Tag', tag), f(logo.id, 'Logo (link da imagem)', logo),
+      f(summary.id, 'Descrição curta *', summary), f(about.id, 'Descrição completa', about),
+      h('label', { class: 'rr-check' }, recruiting, h('span', {}, 'Estamos a recrutar')),
+      f(reqs.id, 'Requisitos de entrada', reqs), f(members.id, 'Nº de membros', members),
+      f(contact.id, 'Link de contacto / candidatura *', contact, 'Normalmente o convite do Discord do clã.'), trap,
+      h('p', { class: 'rr-small rr-muted' }, 'O pedido é analisado pela equipa antes de aparecer no site. Só podes enviar um pedido por conta.'),
+      h('div', { class: 'rr-actions' }, submit));
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (name.value.trim().length < 2) { toast('Indica o nome do clã.', 'error'); name.focus(); return; }
+      if (summary.value.trim().length < 10) { toast('A descrição curta precisa de pelo menos 10 caracteres.', 'error'); summary.focus(); return; }
+      if (!/^https?:\/\//i.test(contact.value.trim())) { toast('Indica um link de contacto que comece por https://', 'error'); contact.focus(); return; }
+      submit.disabled = true; submit.textContent = 'A enviar…';
+      try {
+        const { submission } = await api('/clans/submit', { method: 'POST', body: {
+          title: name.value, tag: tag.value, cover: logo.value.trim(), summary: summary.value, about: about.value,
+          requirements: reqs.value, members: members.value, contactUrl: contact.value.trim(), recruiting: recruiting.checked, website: trap.value,
+        } });
+        toast('Pedido enviado! A equipa vai analisar.');
+        form.replaceWith(status({ ...submission, tag: tag.value }));
+      } catch (err) { toast(err.message, 'error', 7000); submit.disabled = false; submit.textContent = 'Enviar pedido'; }
+    });
+    card.append(form);
+  },
+
   async profile(mount, s, site, ctx) {
     const p = s.props;
     if (ctx.mode === 'preview') { mount.replaceChildren(h('div', { class: 'rr-placeholder' }, 'Perfil do jogador: nome, fotografia e clips (ativo no site publicado)')); return; }
@@ -347,4 +416,6 @@ export function observeReveal(root = document) {
   if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { els.forEach((e) => e.classList.add('is-in')); return; }
   io ||= new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -40px 0px' });
   els.forEach((e) => io.observe(e));
+  // Segurança: nada fica escondido se a animação não disparar.
+  setTimeout(() => els.forEach((e) => e.classList.add('is-in')), 1500);
 }

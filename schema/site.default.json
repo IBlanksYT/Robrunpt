@@ -12,7 +12,10 @@
       "accent": "#ffffff",
       "border": "#243035"
     },
-    "fonts": { "heading": "Rajdhani", "body": "Inter" },
+    "fonts": {
+      "heading": "Rajdhani",
+      "body": "Inter"
+    },
     "radius": 14,
     "spacing": 100,
     "borderWidth": 1,
@@ -20,7 +23,13 @@
     "bgStyle": "glow"
   },
   "header": {
-    "logo": { "src": "/assets/img/logo.webp", "height": 46, "align": "left", "showText": false, "text": "ROB RUN PT" },
+    "logo": {
+      "src": "/assets/img/logo.webp",
+      "height": 46,
+      "align": "left",
+      "showText": false,
+      "text": "ROB RUN PT"
+    },
     "sticky": true,
     "showLogin": true,
     "ctaLabel": "Discord",
@@ -28,12 +37,25 @@
     "extraLinks": []
   },
   "footer": {
-    "logo": { "src": "/assets/img/logo.webp", "height": 40, "align": "left" },
+    "logo": {
+      "src": "/assets/img/logo.webp",
+      "height": 40,
+      "align": "left"
+    },
     "text": "Comunidade portuguesa de jogadores de ROB RUN. Feita por jogadores, para jogadores.",
     "links": [
-      { "label": "Privacidade", "href": "/privacidade" },
-      { "label": "Termos", "href": "/termos" },
-      { "label": "Comunidade", "href": "/comunidade" }
+      {
+        "label": "Privacidade",
+        "href": "/privacidade"
+      },
+      {
+        "label": "Termos",
+        "href": "/termos"
+      },
+      {
+        "label": "Comunidade",
+        "href": "/comunidade"
+      }
     ],
     "showSocial": true,
     "disclaimer": "Comunidade independente e não oficial. Não representa nem está associada aos criadores do jogo ROB RUN. Todas as marcas pertencem aos respetivos proprietários.",
@@ -46,114 +68,536 @@
     "discordUrl": "",
     "contactEmail": "",
     "favicon": "/assets/img/favicon.png",
-    "social": { "tiktok": "", "youtube": "", "instagram": "", "x": "", "twitch": "" }
+    "social": {
+      "tiktok": "",
+      "youtube": "",
+      "instagram": "",
+      "x": "",
+      "twitch": ""
+    }
   },
   "pages": [
     {
-      "id": "inicio", "slug": "inicio", "title": "Início", "home": true, "showInMenu": true,
-      "seo": { "description": "" },
+      "id": "inicio",
+      "slug": "inicio",
+      "title": "Início",
+      "home": true,
+      "showInMenu": true,
+      "seo": {
+        "description": ""
+      },
       "sections": [
-        { "id": "s-home-hero", "type": "hero", "props": {
-          "eyebrow": "Comunidade independente 🇵🇹",
-          "title": "ROB RUN Portugal",
-          "subtitle": "O ponto de encontro dos jogadores portugueses de ROB RUN. Partilha os teus melhores clips, encontra um clã e aprende com a comunidade.",
-          "buttons": [
-            { "label": "Entrar no Discord", "href": "{{discordUrl}}", "variant": "primary" },
-            { "label": "Ver clips", "href": "/clips", "variant": "ghost" }
-          ],
-          "image": "/assets/img/hero-bg.webp", "sideImage": "", "height": "lg", "align": "left", "overlay": 72
-        }, "style": {} },
-        { "id": "s-home-features", "type": "features", "props": {
-          "heading": "Tudo o que a comunidade precisa",
-          "intro": "Um espaço feito por jogadores, para jogadores.",
-          "columns": 4,
-          "items": [
-            { "icon": "🎬", "title": "Clips", "text": "Publica os teus vídeos do YouTube ou TikTok e vê as jogadas da comunidade.", "href": "/clips", "linkLabel": "Ver clips" },
-            { "icon": "🛡️", "title": "Clãs", "text": "Descobre clãs portugueses e quem está a recrutar.", "href": "/clas", "linkLabel": "Ver clãs" },
-            { "icon": "📘", "title": "Guias", "text": "Dicas e guias escritos por membros da comunidade.", "href": "/guias", "linkLabel": "Ler guias" },
-            { "icon": "📰", "title": "Notícias", "text": "Eventos, torneios e novidades da comunidade.", "href": "/noticias", "linkLabel": "Ver notícias" }
-          ]
-        }, "style": {} },
-        { "id": "s-home-clips", "type": "feed", "props": { "source": "clips", "heading": "Clips recentes", "intro": "", "limit": 6, "layout": "grid", "moreLabel": "Ver todos os clips", "moreHref": "/clips", "paginate": false }, "style": {} },
-        { "id": "s-home-news", "type": "feed", "props": { "source": "news", "heading": "Últimas notícias", "intro": "", "limit": 3, "layout": "grid", "moreLabel": "Todas as notícias", "moreHref": "/noticias", "paginate": false }, "style": { "bgColor": "#0c1012" } },
-        { "id": "s-home-discord", "type": "discord", "props": { "title": "Junta-te à comunidade no Discord", "text": "Conversa com outros jogadores portugueses, organiza partidas e acompanha os eventos da comunidade.", "buttonLabel": "Entrar no Discord", "url": "{{discordUrl}}" }, "style": {} },
-        { "id": "s-home-notice", "type": "notice", "props": { "title": "Comunidade independente", "text": "A ROB RUN Portugal é uma comunidade de fãs, independente e não oficial. Não representamos nem estamos associados aos criadores do jogo ROB RUN.", "tone": "info" }, "style": {} }
+        {
+          "id": "s-home-hero",
+          "type": "hero",
+          "props": {
+            "eyebrow": "Comunidade independente 🇵🇹",
+            "title": "ROB RUN Portugal",
+            "subtitle": "O ponto de encontro dos jogadores portugueses de ROB RUN. Partilha os teus melhores clips, encontra um clã e aprende com a comunidade.",
+            "buttons": [
+              {
+                "label": "Entrar no Discord",
+                "href": "{{discordUrl}}",
+                "variant": "primary"
+              },
+              {
+                "label": "Ver clips",
+                "href": "/clips",
+                "variant": "ghost"
+              }
+            ],
+            "image": "/assets/img/hero-bg.webp",
+            "sideImage": "",
+            "height": "lg",
+            "align": "left",
+            "overlay": 72
+          },
+          "style": {}
+        },
+        {
+          "id": "s-home-features",
+          "type": "features",
+          "props": {
+            "heading": "Tudo o que a comunidade precisa",
+            "intro": "Um espaço feito por jogadores, para jogadores.",
+            "columns": 4,
+            "items": [
+              {
+                "icon": "🎬",
+                "title": "Clips",
+                "text": "Publica os teus vídeos do YouTube ou TikTok e vê as jogadas da comunidade.",
+                "href": "/clips",
+                "linkLabel": "Ver clips"
+              },
+              {
+                "icon": "🛡️",
+                "title": "Clãs",
+                "text": "Descobre clãs portugueses e quem está a recrutar.",
+                "href": "/clas",
+                "linkLabel": "Ver clãs"
+              },
+              {
+                "icon": "📘",
+                "title": "Guias",
+                "text": "Dicas e guias escritos por membros da comunidade.",
+                "href": "/guias",
+                "linkLabel": "Ler guias"
+              },
+              {
+                "icon": "📰",
+                "title": "Notícias",
+                "text": "Eventos, torneios e novidades da comunidade.",
+                "href": "/noticias",
+                "linkLabel": "Ver notícias"
+              }
+            ]
+          },
+          "style": {}
+        },
+        {
+          "id": "s-home-clips",
+          "type": "feed",
+          "props": {
+            "source": "clips",
+            "heading": "Clips recentes",
+            "intro": "",
+            "limit": 6,
+            "layout": "grid",
+            "moreLabel": "Ver todos os clips",
+            "moreHref": "/clips",
+            "paginate": false
+          },
+          "style": {}
+        },
+        {
+          "id": "s-home-news",
+          "type": "feed",
+          "props": {
+            "source": "news",
+            "heading": "Últimas notícias",
+            "intro": "",
+            "limit": 3,
+            "layout": "grid",
+            "moreLabel": "Todas as notícias",
+            "moreHref": "/noticias",
+            "paginate": false
+          },
+          "style": {
+            "bgColor": "#0c1012"
+          }
+        },
+        {
+          "id": "s-home-discord",
+          "type": "discord",
+          "props": {
+            "title": "Junta-te à comunidade no Discord",
+            "text": "Conversa com outros jogadores portugueses, organiza partidas e acompanha os eventos da comunidade.",
+            "buttonLabel": "Entrar no Discord",
+            "url": "{{discordUrl}}"
+          },
+          "style": {}
+        },
+        {
+          "id": "s-home-notice",
+          "type": "notice",
+          "props": {
+            "title": "Comunidade independente",
+            "text": "A ROB RUN Portugal é uma comunidade de fãs, independente e não oficial. Não representamos nem estamos associados aos criadores do jogo ROB RUN.",
+            "tone": "info"
+          },
+          "style": {}
+        }
       ]
     },
     {
-      "id": "comunidade", "slug": "comunidade", "title": "Comunidade", "showInMenu": true, "seo": { "description": "" },
+      "id": "comunidade",
+      "slug": "comunidade",
+      "title": "Comunidade",
+      "showInMenu": true,
+      "seo": {
+        "description": ""
+      },
       "sections": [
-        { "id": "s-com-hero", "type": "hero", "props": { "eyebrow": "Quem somos", "title": "A comunidade", "subtitle": "Jogadores portugueses de ROB RUN reunidos num só sítio.", "buttons": [], "image": "", "sideImage": "", "height": "sm", "align": "left", "overlay": 60 }, "style": {} },
-        { "id": "s-com-about", "type": "text", "props": { "heading": "Sobre a ROB RUN Portugal", "body": "<p>A ROB RUN Portugal é uma comunidade independente criada por e para jogadores portugueses. O objetivo é simples: juntar quem joga, partilhar jogadas, ajudar os mais novos e organizar atividades em conjunto.</p><p>Não somos uma equipa oficial do jogo. Qualquer informação oficial deve ser consultada nos canais dos criadores do jogo.</p>", "align": "left" }, "style": {} },
-        { "id": "s-com-rules", "type": "rules", "props": { "heading": "Regras da comunidade", "intro": "Para que todos se divirtam, pedimos que cumpras estas regras no site e no Discord.", "items": [
-          { "title": "Respeito acima de tudo", "text": "Sem insultos, discriminação, assédio ou ameaças. Trata os outros como queres ser tratado." },
-          { "title": "Sem batota nem exploits", "text": "Não partilhes nem promovas cheats, hacks ou formas de prejudicar outros jogadores." },
-          { "title": "Conteúdo apropriado", "text": "Nada de conteúdo ilegal, violento, sexual ou ofensivo. Os clips devem ser de ROB RUN." },
-          { "title": "Sem spam", "text": "Não publiques o mesmo conteúdo repetidamente nem publicidade não autorizada." },
-          { "title": "Protege os teus dados", "text": "Nunca partilhes palavras-passe ou dados de conta. A equipa nunca te vai pedir essas informações." },
-          { "title": "Ouve a moderação", "text": "A equipa de moderação pode remover conteúdo ou suspender contas que não cumpram as regras." }
-        ] }, "style": {} },
-        { "id": "s-com-discord", "type": "discord", "props": { "title": "Convite para o Discord", "text": "É no Discord que a comunidade conversa todos os dias. Entra e apresenta-te!", "buttonLabel": "Entrar no Discord", "url": "{{discordUrl}}" }, "style": {} },
-        { "id": "s-com-faq", "type": "faq", "props": { "heading": "Perguntas frequentes", "items": [
-          { "q": "Isto é o site oficial do ROB RUN?", "a": "Não. A ROB RUN Portugal é uma comunidade independente de fãs e não está associada aos criadores do jogo." },
-          { "q": "Como publico um clip?", "a": "Inicia sessão com a tua conta Google, vai à página Clips e cola o link do teu vídeo do YouTube ou TikTok." },
-          { "q": "Como coloco o meu clã na lista?", "a": "Fala com a equipa no Discord com o nome, a tag e os requisitos do teu clã." }
-        ] }, "style": {} }
+        {
+          "id": "s-com-hero",
+          "type": "hero",
+          "props": {
+            "eyebrow": "Quem somos",
+            "title": "A comunidade",
+            "subtitle": "Jogadores portugueses de ROB RUN reunidos num só sítio.",
+            "buttons": [],
+            "image": "",
+            "sideImage": "",
+            "height": "sm",
+            "align": "left",
+            "overlay": 60
+          },
+          "style": {}
+        },
+        {
+          "id": "s-com-about",
+          "type": "text",
+          "props": {
+            "heading": "Sobre a ROB RUN Portugal",
+            "body": "<p>A ROB RUN Portugal é uma comunidade independente criada por e para jogadores portugueses. O objetivo é simples: juntar quem joga, partilhar jogadas, ajudar os mais novos e organizar atividades em conjunto.</p><p>Não somos uma equipa oficial do jogo. Qualquer informação oficial deve ser consultada nos canais dos criadores do jogo.</p>",
+            "align": "left"
+          },
+          "style": {}
+        },
+        {
+          "id": "s-com-rules",
+          "type": "rules",
+          "props": {
+            "heading": "Regras da comunidade",
+            "intro": "Para que todos se divirtam, pedimos que cumpras estas regras no site e no Discord.",
+            "items": [
+              {
+                "title": "Respeito acima de tudo",
+                "text": "Sem insultos, discriminação, assédio ou ameaças. Trata os outros como queres ser tratado."
+              },
+              {
+                "title": "Sem batota nem exploits",
+                "text": "Não partilhes nem promovas cheats, hacks ou formas de prejudicar outros jogadores."
+              },
+              {
+                "title": "Conteúdo apropriado",
+                "text": "Nada de conteúdo ilegal, violento, sexual ou ofensivo. Os clips devem ser de ROB RUN."
+              },
+              {
+                "title": "Sem spam",
+                "text": "Não publiques o mesmo conteúdo repetidamente nem publicidade não autorizada."
+              },
+              {
+                "title": "Protege os teus dados",
+                "text": "Nunca partilhes palavras-passe ou dados de conta. A equipa nunca te vai pedir essas informações."
+              },
+              {
+                "title": "Ouve a moderação",
+                "text": "A equipa de moderação pode remover conteúdo ou suspender contas que não cumpram as regras."
+              }
+            ]
+          },
+          "style": {}
+        },
+        {
+          "id": "s-com-discord",
+          "type": "discord",
+          "props": {
+            "title": "Convite para o Discord",
+            "text": "É no Discord que a comunidade conversa todos os dias. Entra e apresenta-te!",
+            "buttonLabel": "Entrar no Discord",
+            "url": "{{discordUrl}}"
+          },
+          "style": {}
+        },
+        {
+          "id": "s-com-faq",
+          "type": "faq",
+          "props": {
+            "heading": "Perguntas frequentes",
+            "items": [
+              {
+                "q": "Isto é o site oficial do ROB RUN?",
+                "a": "Não. A ROB RUN Portugal é uma comunidade independente de fãs e não está associada aos criadores do jogo."
+              },
+              {
+                "q": "Como publico um clip?",
+                "a": "Inicia sessão com a tua conta Google, vai à página Clips e cola o link do teu vídeo do YouTube ou TikTok."
+              },
+              {
+                "q": "Como coloco o meu clã na lista?",
+                "a": "Inicia sessão com Google, vai à página Clãs e preenche o formulário. A equipa analisa o pedido e, se for aprovado, o clã aparece na lista."
+              }
+            ]
+          },
+          "style": {}
+        }
       ]
     },
     {
-      "id": "clas", "slug": "clas", "title": "Clãs", "showInMenu": true, "seo": { "description": "" },
+      "id": "clas",
+      "slug": "clas",
+      "title": "Clãs",
+      "showInMenu": true,
+      "seo": {
+        "description": ""
+      },
       "sections": [
-        { "id": "s-cla-hero", "type": "hero", "props": { "eyebrow": "Recrutamento", "title": "Clãs portugueses", "subtitle": "Encontra um clã para jogar ou descobre quem está a recrutar.", "buttons": [], "image": "", "sideImage": "", "height": "sm", "align": "left", "overlay": 60 }, "style": {} },
-        { "id": "s-cla-feed", "type": "feed", "props": { "source": "clans", "heading": "Lista de clãs", "intro": "", "limit": 50, "layout": "grid", "moreLabel": "", "moreHref": "", "paginate": false }, "style": {} },
-        { "id": "s-cla-cta", "type": "cta", "props": { "title": "Tens um clã?", "text": "Fala com a equipa no Discord para o adicionarmos à lista e indicarmos se estás a recrutar.", "buttonLabel": "Falar no Discord", "buttonHref": "{{discordUrl}}", "variant": "primary" }, "style": {} }
+        {
+          "id": "s-cla-hero",
+          "type": "hero",
+          "props": {
+            "eyebrow": "Recrutamento",
+            "title": "Clãs portugueses",
+            "subtitle": "Encontra um clã para jogar ou descobre quem está a recrutar.",
+            "buttons": [],
+            "image": "",
+            "sideImage": "",
+            "height": "sm",
+            "align": "left",
+            "overlay": 60
+          },
+          "style": {}
+        },
+        {
+          "id": "s-cla-feed",
+          "type": "feed",
+          "props": {
+            "source": "clans",
+            "heading": "Lista de clãs",
+            "intro": "",
+            "limit": 50,
+            "layout": "grid",
+            "moreLabel": "",
+            "moreHref": "",
+            "paginate": false
+          },
+          "style": {}
+        },
+        {
+          "id": "s-cla-submit",
+          "type": "clanSubmit",
+          "props": {
+            "heading": "Tens um clã? Envia-o",
+            "text": "Inicia sessão com Google e preenche o formulário. A equipa analisa o pedido antes de o clã aparecer na lista. Só é permitido um pedido por conta."
+          },
+          "style": {}
+        }
       ]
     },
     {
-      "id": "guias", "slug": "guias", "title": "Guias", "showInMenu": true, "seo": { "description": "" },
+      "id": "guias",
+      "slug": "guias",
+      "title": "Guias",
+      "showInMenu": true,
+      "seo": {
+        "description": ""
+      },
       "sections": [
-        { "id": "s-gui-hero", "type": "hero", "props": { "eyebrow": "Aprende com a comunidade", "title": "Guias", "subtitle": "Dicas e guias escritos por jogadores da comunidade. Não são informação oficial do jogo.", "buttons": [], "image": "", "sideImage": "", "height": "sm", "align": "left", "overlay": 60 }, "style": {} },
-        { "id": "s-gui-feed", "type": "feed", "props": { "source": "guides", "heading": "", "intro": "", "limit": 30, "layout": "grid", "moreLabel": "", "moreHref": "", "paginate": false }, "style": {} },
-        { "id": "s-gui-cta", "type": "cta", "props": { "title": "Queres escrever um guia?", "text": "Partilha o que sabes. Envia a tua proposta à equipa no Discord.", "buttonLabel": "Propor um guia", "buttonHref": "{{discordUrl}}", "variant": "ghost" }, "style": {} }
+        {
+          "id": "s-gui-hero",
+          "type": "hero",
+          "props": {
+            "eyebrow": "Aprende com a comunidade",
+            "title": "Guias",
+            "subtitle": "Dicas e guias escritos por jogadores da comunidade. Não são informação oficial do jogo.",
+            "buttons": [],
+            "image": "",
+            "sideImage": "",
+            "height": "sm",
+            "align": "left",
+            "overlay": 60
+          },
+          "style": {}
+        },
+        {
+          "id": "s-gui-feed",
+          "type": "feed",
+          "props": {
+            "source": "guides",
+            "heading": "",
+            "intro": "",
+            "limit": 30,
+            "layout": "grid",
+            "moreLabel": "",
+            "moreHref": "",
+            "paginate": false
+          },
+          "style": {}
+        },
+        {
+          "id": "s-gui-cta",
+          "type": "cta",
+          "props": {
+            "title": "Queres escrever um guia?",
+            "text": "Partilha o que sabes. Envia a tua proposta à equipa no Discord.",
+            "buttonLabel": "Propor um guia",
+            "buttonHref": "{{discordUrl}}",
+            "variant": "ghost"
+          },
+          "style": {}
+        }
       ]
     },
     {
-      "id": "clips", "slug": "clips", "title": "Clips", "showInMenu": true, "seo": { "description": "" },
+      "id": "clips",
+      "slug": "clips",
+      "title": "Clips",
+      "showInMenu": true,
+      "seo": {
+        "description": ""
+      },
       "sections": [
-        { "id": "s-cli-hero", "type": "hero", "props": { "eyebrow": "Galeria da comunidade", "title": "Clips", "subtitle": "As melhores jogadas dos jogadores portugueses. Aceitamos apenas links do YouTube (incluindo Shorts) e do TikTok.", "buttons": [], "image": "", "sideImage": "", "height": "sm", "align": "left", "overlay": 60 }, "style": {} },
-        { "id": "s-cli-submit", "type": "clipSubmit", "props": { "heading": "Publicar um clip", "text": "Cola o link do teu vídeo de ROB RUN no YouTube ou TikTok. A publicação é imediata — respeita as regras da comunidade." }, "style": {} },
-        { "id": "s-cli-feed", "type": "feed", "props": { "source": "clips", "heading": "Todos os clips", "intro": "", "limit": 12, "layout": "grid", "moreLabel": "", "moreHref": "", "paginate": true }, "style": {} }
+        {
+          "id": "s-cli-hero",
+          "type": "hero",
+          "props": {
+            "eyebrow": "Galeria da comunidade",
+            "title": "Clips",
+            "subtitle": "As melhores jogadas dos jogadores portugueses. Aceitamos apenas links do YouTube (incluindo Shorts) e do TikTok.",
+            "buttons": [],
+            "image": "",
+            "sideImage": "",
+            "height": "sm",
+            "align": "left",
+            "overlay": 60
+          },
+          "style": {}
+        },
+        {
+          "id": "s-cli-submit",
+          "type": "clipSubmit",
+          "props": {
+            "heading": "Publicar um clip",
+            "text": "Cola o link do teu vídeo de ROB RUN no YouTube ou TikTok. A publicação é imediata — respeita as regras da comunidade."
+          },
+          "style": {}
+        },
+        {
+          "id": "s-cli-feed",
+          "type": "feed",
+          "props": {
+            "source": "clips",
+            "heading": "Todos os clips",
+            "intro": "",
+            "limit": 12,
+            "layout": "grid",
+            "moreLabel": "",
+            "moreHref": "",
+            "paginate": true
+          },
+          "style": {}
+        }
       ]
     },
     {
-      "id": "noticias", "slug": "noticias", "title": "Notícias", "showInMenu": true, "seo": { "description": "" },
+      "id": "noticias",
+      "slug": "noticias",
+      "title": "Notícias",
+      "showInMenu": true,
+      "seo": {
+        "description": ""
+      },
       "sections": [
-        { "id": "s-not-hero", "type": "hero", "props": { "eyebrow": "Novidades", "title": "Notícias da comunidade", "subtitle": "Eventos, torneios e anúncios da ROB RUN Portugal.", "buttons": [], "image": "", "sideImage": "", "height": "sm", "align": "left", "overlay": 60 }, "style": {} },
-        { "id": "s-not-feed", "type": "feed", "props": { "source": "news", "heading": "", "intro": "", "limit": 30, "layout": "list", "moreLabel": "", "moreHref": "", "paginate": false }, "style": {} }
+        {
+          "id": "s-not-hero",
+          "type": "hero",
+          "props": {
+            "eyebrow": "Novidades",
+            "title": "Notícias da comunidade",
+            "subtitle": "Eventos, torneios e anúncios da ROB RUN Portugal.",
+            "buttons": [],
+            "image": "",
+            "sideImage": "",
+            "height": "sm",
+            "align": "left",
+            "overlay": 60
+          },
+          "style": {}
+        },
+        {
+          "id": "s-not-feed",
+          "type": "feed",
+          "props": {
+            "source": "news",
+            "heading": "",
+            "intro": "",
+            "limit": 30,
+            "layout": "list",
+            "moreLabel": "",
+            "moreHref": "",
+            "paginate": false
+          },
+          "style": {}
+        }
       ]
     },
     {
-      "id": "login", "slug": "login", "title": "Entrar", "showInMenu": false, "seo": { "description": "" },
+      "id": "login",
+      "slug": "login",
+      "title": "Entrar",
+      "showInMenu": false,
+      "seo": {
+        "description": ""
+      },
       "sections": [
-        { "id": "s-log-auth", "type": "auth", "props": { "heading": "Entrar na ROB RUN Portugal", "text": "Usa a tua conta Google para publicar clips e ter o teu perfil na comunidade. Não precisas de criar uma palavra-passe nova." }, "style": { "padTop": 100, "padBottom": 100 } }
+        {
+          "id": "s-log-auth",
+          "type": "auth",
+          "props": {
+            "heading": "Entrar na ROB RUN Portugal",
+            "text": "Usa a tua conta Google para publicar clips e ter o teu perfil na comunidade. Não precisas de criar uma palavra-passe nova."
+          },
+          "style": {
+            "padTop": 100,
+            "padBottom": 100
+          }
+        }
       ]
     },
     {
-      "id": "perfil", "slug": "perfil", "title": "Perfil", "showInMenu": false, "seo": { "description": "" },
+      "id": "perfil",
+      "slug": "perfil",
+      "title": "Perfil",
+      "showInMenu": false,
+      "seo": {
+        "description": ""
+      },
       "sections": [
-        { "id": "s-per-profile", "type": "profile", "props": { "heading": "Perfil" }, "style": {} }
+        {
+          "id": "s-per-profile",
+          "type": "profile",
+          "props": {
+            "heading": "Perfil"
+          },
+          "style": {}
+        }
       ]
     },
     {
-      "id": "privacidade", "slug": "privacidade", "title": "Privacidade", "showInMenu": false, "seo": { "description": "" },
+      "id": "privacidade",
+      "slug": "privacidade",
+      "title": "Privacidade",
+      "showInMenu": false,
+      "seo": {
+        "description": ""
+      },
       "sections": [
-        { "id": "s-pri-text", "type": "text", "props": { "heading": "Política de Privacidade", "align": "left", "body": "<p>Esta política explica que dados pessoais a comunidade {{siteName}} trata, porquê e durante quanto tempo, de acordo com o Regulamento Geral sobre a Proteção de Dados (RGPD).</p><h3>Responsável pelo tratamento</h3><p>A equipa de administração da comunidade {{siteName}}. Contacto: {{contactEmail}}.</p><h3>Que dados tratamos</h3><ul><li><strong>Conta Google</strong> (apenas se iniciares sessão): identificador Google, nome, fotografia de perfil e email. Fundamento: execução do serviço que pedes (art. 6.º, n.º 1, al. b) RGPD).</li><li><strong>Clips que publicas</strong>: link do vídeo, título, descrição e data. São públicos no site.</li><li><strong>Cookies estritamente necessários</strong>: um cookie de sessão e um cookie de segurança (CSRF). Não usamos cookies de publicidade nem de análise.</li><li><strong>Segurança</strong>: para travar ataques ao login guardamos, no máximo durante 24 horas, um pseudónimo do endereço IP (hash irreversível com chave secreta que muda diariamente). Fundamento: interesse legítimo na segurança do serviço (art. 6.º, n.º 1, al. f)). Não guardamos o IP em claro.</li><li><strong>Estatísticas</strong>: contamos visitas por página de forma agregada e anónima, sem cookies, IPs ou identificadores.</li></ul><h3>Conteúdos de terceiros</h3><p>Os vídeos do YouTube e do TikTok só são carregados quando carregas no botão para reproduzir. Nesse momento, esses serviços podem recolher dados de acordo com as suas próprias políticas. O botão de login Google é fornecido pela Google.</p><h3>Durante quanto tempo</h3><ul><li>Sessões: até 30 dias (12 horas para sessões de administração).</li><li>Conta e clips: até eliminares a conta. Contas de jogadores sem login há mais de 24 meses são eliminadas automaticamente.</li><li>Registos de segurança: até 24 horas. Registos de moderação: 180 dias.</li><li>Cópias de segurança: até 14 dias (rotação automática).</li></ul><h3>Os teus direitos</h3><p>Podes aceder, retificar, exportar e apagar os teus dados. Na página do teu perfil tens os botões <em>Exportar os meus dados</em> e <em>Eliminar conta</em>. Podes também contactar-nos ou apresentar reclamação à CNPD (www.cnpd.pt).</p><h3>Alojamento</h3><p>O site está alojado na Netlify. Os dados são guardados no armazenamento Netlify Blobs associado ao site.</p>" }, "style": { "width": "narrow" } }
+        {
+          "id": "s-pri-text",
+          "type": "text",
+          "props": {
+            "heading": "Política de Privacidade",
+            "align": "left",
+            "body": "<p>Esta política explica que dados pessoais a comunidade {{siteName}} trata, porquê e durante quanto tempo, de acordo com o Regulamento Geral sobre a Proteção de Dados (RGPD).</p><h3>Responsável pelo tratamento</h3><p>A equipa de administração da comunidade {{siteName}}. Contacto: {{contactEmail}}.</p><h3>Que dados tratamos</h3><ul><li><strong>Conta Google</strong> (apenas se iniciares sessão): identificador Google, nome, fotografia de perfil e email. Fundamento: execução do serviço que pedes (art. 6.º, n.º 1, al. b) RGPD).</li><li><strong>Clips que publicas</strong>: link do vídeo, título, descrição e data. São públicos no site.</li><li><strong>Cookies estritamente necessários</strong>: um cookie de sessão e um cookie de segurança (CSRF). Não usamos cookies de publicidade nem de análise.</li><li><strong>Segurança</strong>: para travar ataques ao login guardamos, no máximo durante 24 horas, um pseudónimo do endereço IP (hash irreversível com chave secreta que muda diariamente). Fundamento: interesse legítimo na segurança do serviço (art. 6.º, n.º 1, al. f)). Não guardamos o IP em claro.</li><li><strong>Estatísticas</strong>: contamos visitas por página de forma agregada e anónima, sem cookies, IPs ou identificadores.</li></ul><h3>Conteúdos de terceiros</h3><p>Os vídeos do YouTube e do TikTok só são carregados quando carregas no botão para reproduzir. Nesse momento, esses serviços podem recolher dados de acordo com as suas próprias políticas. O botão de login Google é fornecido pela Google.</p><h3>Durante quanto tempo</h3><ul><li>Sessões: até 30 dias (12 horas para sessões de administração).</li><li>Conta e clips: até eliminares a conta. Contas de jogadores sem login há mais de 24 meses são eliminadas automaticamente.</li><li>Registos de segurança: até 24 horas. Registos de moderação: 180 dias.</li><li>Cópias de segurança: até 14 dias (rotação automática).</li></ul><h3>Os teus direitos</h3><p>Podes aceder, retificar, exportar e apagar os teus dados. Na página do teu perfil tens os botões <em>Exportar os meus dados</em> e <em>Eliminar conta</em>. Podes também contactar-nos ou apresentar reclamação à CNPD (www.cnpd.pt).</p><h3>Alojamento</h3><p>O site está alojado na Netlify. Os dados são guardados no armazenamento Netlify Blobs associado ao site.</p>"
+          },
+          "style": {
+            "width": "narrow"
+          }
+        }
       ]
     },
     {
-      "id": "termos", "slug": "termos", "title": "Termos", "showInMenu": false, "seo": { "description": "" },
+      "id": "termos",
+      "slug": "termos",
+      "title": "Termos",
+      "showInMenu": false,
+      "seo": {
+        "description": ""
+      },
       "sections": [
-        { "id": "s-ter-text", "type": "text", "props": { "heading": "Termos de Utilização", "align": "left", "body": "<p>Ao utilizar o site {{siteName}} aceitas estes termos.</p><h3>Comunidade não oficial</h3><p>Este site é mantido por fãs. Não é oficial e não representa nem está associado aos criadores do jogo ROB RUN. Nomes e marcas pertencem aos respetivos proprietários.</p><h3>Contas</h3><p>O login é feito com Google. És responsável pela atividade na tua conta. Podemos suspender contas que violem as regras da comunidade.</p><h3>Conteúdo publicado</h3><ul><li>Só podes publicar clips de ROB RUN alojados no YouTube ou no TikTok e que tenhas o direito de partilhar.</li><li>É proibido conteúdo ilegal, ofensivo, discriminatório, sexual, violento, spam ou que promova batota.</li><li>Os clips são publicados automaticamente, mas a moderação pode editá-los, ocultá-los ou removê-los a qualquer momento.</li><li>Manténs os direitos sobre o teu conteúdo; ao publicá-lo autorizas a sua apresentação neste site através dos mecanismos oficiais de incorporação.</li></ul><h3>Limitação de responsabilidade</h3><p>O site é disponibilizado tal como está. Os guias são opiniões de membros da comunidade e não informação oficial.</p><h3>Contacto</h3><p>{{contactEmail}}</p>" }, "style": { "width": "narrow" } }
+        {
+          "id": "s-ter-text",
+          "type": "text",
+          "props": {
+            "heading": "Termos de Utilização",
+            "align": "left",
+            "body": "<p>Ao utilizar o site {{siteName}} aceitas estes termos.</p><h3>Comunidade não oficial</h3><p>Este site é mantido por fãs. Não é oficial e não representa nem está associado aos criadores do jogo ROB RUN. Nomes e marcas pertencem aos respetivos proprietários.</p><h3>Contas</h3><p>O login é feito com Google. És responsável pela atividade na tua conta. Podemos suspender contas que violem as regras da comunidade.</p><h3>Conteúdo publicado</h3><ul><li>Só podes publicar clips de ROB RUN alojados no YouTube ou no TikTok e que tenhas o direito de partilhar.</li><li>É proibido conteúdo ilegal, ofensivo, discriminatório, sexual, violento, spam ou que promova batota.</li><li>Os clips são publicados automaticamente, mas a moderação pode editá-los, ocultá-los ou removê-los a qualquer momento.</li><li>Manténs os direitos sobre o teu conteúdo; ao publicá-lo autorizas a sua apresentação neste site através dos mecanismos oficiais de incorporação.</li></ul><h3>Limitação de responsabilidade</h3><p>O site é disponibilizado tal como está. Os guias são opiniões de membros da comunidade e não informação oficial.</p><h3>Contacto</h3><p>{{contactEmail}}</p>"
+          },
+          "style": {
+            "width": "narrow"
+          }
+        }
       ]
     }
   ]
