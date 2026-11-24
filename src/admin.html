@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Painel · ROB RUN Portugal</title>
+  <link rel="icon" href="/assets/img/favicon.png">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css">
+  <link rel="stylesheet" href="/assets/css/admin.css">
+  <script type="module" src="/assets/js/admin/admin.js"></script>
+</head>
+<body class="ad">
+  <div id="ad-login" class="ad-login" hidden>
+    <div class="ad-login__card">
+      <img src="/assets/img/logo.webp" alt="ROB RUN Portugal" class="ad-login__logo">
+      <h1>Painel de administração</h1>
+      <p class="ad-muted">Acesso reservado à equipa da comunidade.</p>
+      <p class="ad-login__msg ad-error" role="alert" hidden></p>
+      <form autocomplete="on">
+        <label class="ad-field">
+          <span class="ad-field__label">Palavra-passe de administrador</span>
+          <input type="password" name="password" required minlength="10" autocomplete="current-password">
+        </label>
+        <button type="submit" class="ad-btn ad-btn--primary ad-btn--block">Entrar</button>
+      </form>
+      <div class="ad-login__google" hidden>
+        <div class="ad-login__or"><span>ou</span></div>
+        <p class="ad-small ad-muted">Contas Google com função de moderador ou administrador</p>
+        <div class="ad-login__gbtn"></div>
+      </div>
+      <a href="/" class="ad-small">← Voltar ao site</a>
+    </div>
+  </div>
+
+  <div id="ad-app" class="ad-app" hidden>
+    <header class="ad-top">
+      <a class="ad-top__brand" href="#editor"><img src="/assets/img/logo.webp" alt=""><span>CMS</span></a>
+      <nav class="ad-nav" aria-label="Secções do painel"></nav>
+      <div class="ad-me"></div>
+    </header>
+    <div class="ad-health" hidden></div>
+    <main id="ad-view" class="ad-view"></main>
+  </div>
+</body>
+</html>
